@@ -105,17 +105,41 @@ def get_labels(lines,threshold=35):
         grid = samples[i].fields['dBZ']['data'][0]
         for x in range(240):
             for y in range(240):
-                if grid[x,y]<35:
-                    grid[x,y]=0
-                else:
-                    grid[x,y]=1
+                if not grid.mask[x,y]:
+                    if grid[x,y]<35:
+                        grid.data[x,y]=0
+                    else:
+                        grid.data[x,y]=1
         labels.append(grid)
     return(labels)
 
-def get_rays(day,init_time):
-    folder=day[:6]
-    dia=day[2:]
+def get_rays(day):
+    folder=str(day)[:6]
+    dia=str(day)
     path_user_rayos = './rayos/'+ folder + '/' + dia
     # Con esto levanto todos los datos de rayos país ese día
     with open(path_user_rayos+'.txt') as f:
         lights = f.readlines()
+    return(lights)
+
+def get_limits(day,init_time):
+    grid=get_volumes(day,init_time)[0]
+    lat_grid = grid.get_point_longitude_latitude(level=0, edges=False)[1]
+    lon_grid = grid.get_point_longitude_latitude(level=0, edges=False)[0]
+    extLat   = [np.amin(lat_grid),np.amax(lat_grid)]
+    extLon   = [np.amin(lon_grid),np.amax(lon_grid)]
+    return(extLon,extLat)
+
+def rayos_correctos(archivo,limite_tiempo,limite_lon,limite_lat):
+    index = []
+    for i in range(len(archivo)):
+        foo=archivo[i].split()
+        t=(foo[3]+foo[4]+foo[5])
+        if (t<limite_tiempo[1]) and (t>limite_tiempo[0]) :
+            
+            if(float(foo[7])>limite_lat[0]) and (float(foo[7])<limite_lat[1]):
+                
+                if(float(foo[8])>limite_lon[0]) and (float(foo[8])<limite_lon[1]):
+                    index.append(i)
+    return(index)
+    
