@@ -2,6 +2,14 @@
 ##TODO 
 Hacer una librería de esto
 """
+from matplotlib import pyplot as plt
+from matplotlib import colors
+from sklearn.svm import SVC
+import numpy as np
+import glob
+import pyart
+import scipy.io as sio
+import re
 
 def read_files(day,init_time):
     day = str(day)
