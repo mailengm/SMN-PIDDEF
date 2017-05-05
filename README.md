@@ -2,6 +2,11 @@
 Storm Tracking. Nowcasting
 Datos de Rayos
 Datos de Radar
+## Licencias
+Estoy usando las siguientes librerías:
+PyART
+Scikit/Scikit Learn
+TensorFlow
 
 ## Datos disponibles
 
@@ -17,13 +22,13 @@ Las etiquetas se consiguen proponiendo un umbral, en este caso 35dBZ; las celdas
 
 #### Características
 
-Se obtuvo una grilla donde cada celda tiene la cantidad de rayos que cayeron ahí durante ese volumen y la diferencia con el número de rayos del volumen siguiente. (GET Training Set)
+Armé una grilla donde cada celda tiene la cantidad de rayos que cayeron ahí durante ese volumen y la diferencia con el número de rayos del volumen siguiente. (GET Training Set)
 
-Luego se computó una red con los vecinos cercanos y se calcularon las mismas cosas. (SVM)
+Luego computo una red con los vecinos cercanos y calculo las mismas cosas. (SVM)
 
 #### SVM
 
-Se usó la función SVC de scikitlearn. 
+Usé la función SVC de scikitlearn. 
 C=5.0
 kernel=rbf
 
